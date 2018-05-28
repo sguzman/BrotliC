@@ -14,4 +14,3 @@ RUN make
 WORKDIR ../../
 RUN cmake .
 RUN make
-RUN ./server
