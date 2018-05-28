@@ -6,7 +6,7 @@ using std::cout;
 using std::cerr;
 using std::endl;
 
-constexpr const static const char * const address{"0.0.0.0"};
+constexpr static const char * const address{"0.0.0.0"};
 constexpr const static unsigned short cores{8};
 constexpr const static unsigned short port{
 #ifdef PORT
