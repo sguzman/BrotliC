@@ -7,11 +7,34 @@ using std::cerr;
 using std::endl;
 
 constexpr const static unsigned short cores{8};
+constexpr const static unsigned short port{
+#ifdef PORT
+    PORT
+#else
+    8080
+#endif
+};
+
+static inline const char* resp(
+    const std::string& user,
+    const std::string& repo,
+    const std::string& branch,
+    const std::string& file) noexcept {
+  return (user + repo + branch + file).c_str();
+}
 
 int main() noexcept {
-  cout << "Hello world" << endl;
+  {
+    crow::SimpleApp app{};
+    CROW_ROUTE(app, "/<string>/<string>/<string>/<string>")(resp);
 
-  cout << Curl::get("https://raw.githubusercontent.com/sguzman/BrotliEncoderService/master/build.sc") << endl;
+    app
+        .port(port)
+        .bindaddr("0.0.0.0")
+        .concurrency(cores)
+        .multithreaded()
+        .run();
+  }
 
   return EXIT_SUCCESS;
 }
